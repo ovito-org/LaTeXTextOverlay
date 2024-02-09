@@ -3,24 +3,25 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "[[PackageName]]"
-version = "[[Version number]]"
-description = "[[Short description]]"
+name = "LaTeXTextOverlay"
+version = "2024.1"
+description = "Render LaTeX text in the viewport"
 keywords = ["ovito", "ovito-extension"]
-authors = [{name = "[[Author 1 name]]", email = "[[Author 1 email]]"}, {name = "[[Author 2 name]]", email = "[[Author 2 email]]"}]
-maintainers = [{name = "[[Maintainer 1 name]]", email = "[[Maintainer 1 email]]"}]
-license = {text = "[[License]]"}
+authors = [{name = "Daniel Utt", email = "utt@ovito.org"}]
+maintainers = [{name = "Daniel Utt", email = "utt@ovito.org"}]
+license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
     "ovito >= 3.9.2",
+    "matplotlib >= 3.4.0",
 ]
 
 [project.urls]
-repository = "[[Repository Link]]"
+repository = "https://github.com/nnn911/LatexTextOverlay"
 
 [project.entry-points.'OVITO.ViewportOverlay']
-"Human Readable Viewport Overlay Name" = "[[PackageName]]:[[ViewportOverlayName]]"
+"LaTeX Text Overlay" = "LaTeXTextOverlay:LaTeXTextOverlay"
 
 [tool.setuptools.packages.find]
 where = ["src"]
