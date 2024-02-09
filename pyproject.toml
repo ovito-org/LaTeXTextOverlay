@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.urls]
-repository = "https://github.com/nnn911/LatexTextOverlay"
+repository = "https://github.com/nnn911/LaTeXTextOverlay"
 
 [project.entry-points.'OVITO.ViewportOverlay']
 "LaTeX Text Overlay" = "LaTeXTextOverlay:LaTeXTextOverlay"
