@@ -10,7 +10,7 @@ from traits.api import Bool, Code, Enum, Range
 
 
 class LaTeXTextOverlay(ViewportOverlayInterface):
-    text = Code(value="\exp^{i \pi} + 1 = 0", label="Text")
+    text = Code(value=r"\exp^{i \pi} + 1 = 0", label="Text")
     font = Enum(_validators["mathtext.fontset"].valid.values(), label="Font")
     fontsize = Range(low=1, high=None, value=50, label="Font size")
     if ovito.version >= (3, 10, 3):
