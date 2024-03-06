@@ -1,6 +1,8 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
+# https://pytest-qt.readthedocs.io/en/latest/troubleshooting.html#github-actions
+
 name: Python Tests
 
 on:
@@ -24,13 +26,18 @@ jobs:
           - os: macos-latest
             python-version: "3.8"
     steps:
-    - uses: actions/checkout@v3
-    - name: Install apt dependencies
+    - uses: actions/checkout@v4
+    - name: Install apt dependencies (Linux)
       if:  matrix.os == 'ubuntu-latest'
       run: |
-        sudo apt install -y libegl1 libegl1-mesa libegl-mesa0 libgl1-mesa-glx libopengl0
+        sudo apt install -y libxkbcommon-x11-0 libxcb-icccm4 libxcb-image0 libxcb-keysyms1 libxcb-randr0 libxcb-render-util0 libxcb-xinerama0 libxcb-xfixes0 x11-utils libegl1 libegl1-mesa libegl-mesa0 libgl1-mesa-glx libopengl0
+    - name: Setup display (Linux)
+      if: matrix.os == 'ubuntu-latest'
+      run: |
+        export DISPLAY=:99.0
+        /sbin/start-stop-daemon --start --quiet --pidfile /tmp/custom_xvfb_99.pid --make-pidfile --background --exec /usr/bin/Xvfb -- :99 -screen 0 1920x1200x24 -ac +extension GLX
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
         check-latest: true
