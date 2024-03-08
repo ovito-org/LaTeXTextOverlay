@@ -1,14 +1,11 @@
-import os
+import io
+from contextlib import redirect_stdout
+from pathlib import Path
 
-os.environ["OVITO_GUI_MODE"] = "1"
-
-import io  # noqa: E402
-from contextlib import redirect_stdout  # noqa: E402
-from pathlib import Path  # noqa: E402
-
-import ovito  # noqa: E402
-import pytest  # noqa: E402
-from ovito.qt_compat import QtGui  # noqa: E402
+import ovito
+import pytest
+from ovito.qt_compat import QtGui
+from ovito.vis import TachyonRenderer
 
 
 def image_comperator(img1: QtGui.QImage, img2: QtGui.QImage):
@@ -49,12 +46,16 @@ def get_rendered_image():
     scene = ovito.scene
     scene.load(str(Path("tests", "test.ovito")))
     settings = ovito.scene.render_settings
+    renderer = TachyonRenderer(direct_light_intensity=0.6)
+    settings.renderer = renderer
     if not settings.render_all_viewports:
         viewport_layout = [(scene.viewports.active_vp, (0.0, 0.0, 1.0, 1.0))]
     else:
         viewport_layout = scene.viewports.get_viewport_rectangles()
     with redirect_stdout(io.StringIO()):
         frame_buffer = settings.render_scene(scene.anim, viewport_layout)
+
+    frame_buffer.image.save(str(Path("tests", "img.png")))
     yield frame_buffer.image
 
 
