@@ -2,7 +2,7 @@
 Render LaTeX text in the viewport
 
 ## Description
-tbd
+Add LaTeX text labels to your OVITO Pro renders. Rendering is based on matplotlib's text labels.
 
 ## Parameters 
 - "Text" | `text`: Text to be rendered in LaTeX. Default = "\exp^{i \pi} + 1 = 0"
