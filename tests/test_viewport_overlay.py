@@ -9,7 +9,6 @@ from ovito.vis import TachyonRenderer
 
 
 def image_comperator(img1: QtGui.QImage, img2: QtGui.QImage):
-    max_deviation_rate = 0.15 * 1e-2
     color_threshold = 6
 
     if img1.isNull():
@@ -38,7 +37,7 @@ def image_comperator(img1: QtGui.QImage, img2: QtGui.QImage):
             ):
                 deviation_count += 1
     deviation_rate = deviation_count / (img1.width() * img1.height())
-    return deviation_rate < max_deviation_rate
+    return deviation_rate
 
 
 @pytest.fixture
@@ -65,4 +64,6 @@ def get_ref_img():
 
 
 def test_rendered_image(get_rendered_image, get_ref_img):
-    assert image_comperator(get_rendered_image, get_ref_img)
+    max_deviation_rate = 0.15 * 1e-2
+    deviation_rate = image_comperator(get_rendered_image, get_ref_img)
+    assert deviation_rate < max_deviation_rate
